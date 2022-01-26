@@ -36,13 +36,17 @@ public class LibraryController {
     @PostMapping(value = "/api/books")
     public ResponseEntity<Book> addBook(@RequestBody Book book){
         LOG.info("Request: {}", book);
-        return ResponseEntity.ok(libraryService.saveBook(book));
+        return ResponseEntity.
+                status(HttpStatus.CREATED)
+                .body(libraryService.saveBook(book));
     }
 
     @GetMapping(value = "/api/books")
     public ResponseEntity<HashMap> getBooks(){
         LOG.info("Getting books in alphabetical order by title");
-        return ResponseEntity.ok(libraryService.getBooks());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(libraryService.getBooks());
     }
 
     @DeleteMapping(value = "/api/books")
@@ -51,6 +55,6 @@ public class LibraryController {
         libraryService.deleteBooks();
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body("deleted books from library");
+                .body("");
     }
 }
